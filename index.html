@@ -13,6 +13,11 @@
             --card-bg: #ffffff;
             --text-main: #1d1d1f;
             --text-sub: #86868b;
+            --search-bg: #e3e3e6;
+            --dialog-bg: #ffffff;
+            --dialog-text: #1d1d1f;
+            /* নতুন হেডার ব্যাকগ্রাউন্ড ভেরিয়েবল */
+            --header-bg: rgba(255, 255, 255, 0.8);
         }
 
         * {
@@ -23,12 +28,23 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* ডার্ক মোড সাপোর্ট */
+        body.dark-theme {
+            --bg: #000000;
+            --card-bg: #1c1c1e;
+            --text-main: #ffffff;
+            --text-sub: #a1a1a6;
+            --search-bg: #1c1c1e;
+            --header-bg: rgba(0, 0, 0, 0.7);
+        }
+
         body {
             background-color: var(--bg);
             color: var(--text-main);
             padding-bottom: 30px;
             overflow-x: hidden;
             overscroll-behavior-y: contain;
+            transition: background 0.3s ease;
         }
 
         /* --- Pull to Refresh Style --- */
@@ -51,7 +67,6 @@
             border-top: 3px solid var(--primary);
             border-radius: 50%;
             transform: rotate(0deg);
-            transition: transform 0.1s linear;
         }
 
         .refresh-spinner.loading {
@@ -64,7 +79,7 @@
 
         /* --- Header Section --- */
         .header {
-            background: rgba(255, 255, 255, 0.8);
+            background: var(--header-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 20px;
@@ -74,19 +89,25 @@
             border-bottom: 0.5px solid #d1d1d6;
         }
 
+        body.dark-theme .header {
+            border-bottom: 0.5px solid #333;
+        }
+
         .header h1 {
             font-size: 24px;
             font-weight: 800;
             letter-spacing: -0.5px;
             margin-bottom: 15px;
+            transition: color 0.3s;
         }
 
         .search-container {
-            background: #e3e3e6;
+            background: var(--search-bg);
             border-radius: 12px;
             display: flex;
             align-items: center;
             padding: 10px 15px;
+            transition: background 0.3s;
         }
 
         .search-container input {
@@ -96,6 +117,7 @@
             width: 100%;
             font-size: 16px;
             margin-left: 10px;
+            color: var(--text-main);
         }
 
         /* --- Category Slider --- */
@@ -143,7 +165,7 @@
             align-items: center;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.3s, background 0.3s;
             position: relative;
             cursor: pointer;
         }
@@ -201,8 +223,9 @@
             font-size: 13px;
             cursor: pointer;
             width: 100%;
-            transition: 0.2s;
         }
+
+        body.dark-theme .btn-install { background: #2c2c2e; }
 
         .btn-install.downloading {
             background: var(--primary);
@@ -239,7 +262,7 @@
             transition: 0.3s;
         }
 
-        /* --- New Detail Modal Styles with Screenshots --- */
+        /* --- Detail Modal --- */
         .detail-modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -253,7 +276,8 @@
         }
 
         .detail-modal-card {
-            background: white;
+            background: var(--dialog-bg);
+            color: var(--dialog-text);
             border-radius: 36px;
             width: 100%;
             max-width: 380px;
@@ -264,7 +288,6 @@
             animation: pop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             scrollbar-width: none;
         }
-        .detail-modal-card::-webkit-scrollbar { display: none; }
 
         .detail-icon {
             margin: 0 auto 12px;
@@ -283,23 +306,17 @@
             margin: 15px 0;
             scrollbar-width: none;
         }
-        .screenshot-container::-webkit-scrollbar { display: none; }
         
         .screenshot-img {
-            width: 140px;
-            height: 250px;
-            border-radius: 15px;
-            object-fit: cover;
-            flex-shrink: 0;
-            background: #eee;
-            border: 1px solid #eee;
+            width: 140px; height: 250px;
+            border-radius: 15px; object-fit: cover; flex-shrink: 0;
+            background: #eee; border: 1px solid #eee;
         }
 
         .detail-description {
             font-size: 14px;
             line-height: 1.5;
-            color: var(--text-main);
-            background: #f8f8fc;
+            background: rgba(0,0,0,0.03);
             padding: 15px;
             border-radius: 20px;
             margin-bottom: 20px;
@@ -307,7 +324,7 @@
             white-space: pre-wrap;
         }
 
-        /* Modal Original Styles Continued */
+        /* Modal Styles */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -319,26 +336,25 @@
             z-index: 2000;
         }
         .modal-content {
-            background: white;
+            background: var(--dialog-bg);
+            color: var(--dialog-text);
             border-radius: 30px;
-            width: 100%;
-            max-width: 350px;
-            padding: 30px;
+            width: 100%; max-width: 350px; padding: 30px;
             text-align: center;
-            animation: pop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
         .modal-button-group { display: flex; gap: 12px; margin-top: 8px; }
-        .modal-btn { flex: 1; padding: 12px; border-radius: 30px; font-weight: 700; font-size: 16px; border: none; cursor: pointer; }
+        .modal-btn { flex: 1; padding: 12px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer; }
         .modal-install-btn { background: var(--primary); color: white; }
         .modal-cancel-btn { background: #e9e9ef; color: #1d1d1f; }
         
         .modal-progress-area { margin: 15px 0 10px; display: none; }
         .modal-progress-bar-bg { background: #e5e5ea; border-radius: 12px; height: 6px; overflow: hidden; margin: 12px 0; }
-        .modal-progress-fill { width: 0%; height: 100%; background: var(--success); transition: 0.2s; }
+        .modal-progress-fill { width: 0%; height: 100%; background: var(--success); }
         .modal-cancel-download-btn { background: #ffebeb; color: var(--danger); border: none; padding: 10px; border-radius: 30px; font-weight: 600; width: 100%; display: none; cursor: pointer; }
 
         #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); color: white; padding: 12px 25px; border-radius: 25px; font-size: 14px; z-index: 3000; display: none; }
         #loader { position: fixed; top:0; left:0; width:100%; height:100%; background: white; display: flex; justify-content: center; align-items: center; z-index: 9999; }
+        body.dark-theme #loader { background: #000; }
         .main-spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
 
         @keyframes pop {
@@ -386,16 +402,12 @@
         <div id="detailIconArea" class="detail-icon"></div>
         <div class="detail-name" id="detailAppName" style="font-size: 22px; font-weight: 800;"></div>
         <div class="detail-cat-rating" id="detailMeta" style="color: var(--text-sub); font-size: 13px; margin: 5px 0;"></div>
-        
         <div class="screenshot-container" id="screenshotArea"></div>
-        
         <div class="detail-description" id="detailDesc"></div>
-        
         <div id="detailInitialButtons" class="modal-button-group">
             <button id="detailInstallBtn" class="modal-btn modal-install-btn">ইন্সটল</button>
             <button onclick="closeDetailModal()" class="modal-btn modal-cancel-btn">বন্ধ</button>
         </div>
-        
         <div id="detailProgressArea" class="modal-progress-area">
             <div class="modal-progress-bar-bg"><div id="detailProgressFill" class="modal-progress-fill"></div></div>
             <div id="detailPercentText" style="font-weight: bold;">0%</div>
@@ -405,7 +417,6 @@
 </div>
 
 <div id="toast"></div>
-
 <script>
     const SUPABASE_URL = "https://fbywkbxtedszsifcnngz.supabase.co";
     const SUPABASE_KEY = "sb_publishable_bA1U7u3q6eQCUi-d75fbHg_imndsQVS";
@@ -416,61 +427,58 @@
     let currentDetailApp = null;
     
     // --- Pull to Refresh ---
-    let startY = 0;
-    let isPulling = false;
+    let startY = 0; let isPulling = false;
     const refreshContainer = document.getElementById('refresh-container');
     const refreshSpinner = document.getElementById('refresh-spinner');
 
-    window.addEventListener('touchstart', (e) => {
-        if (window.scrollY === 0) { startY = e.touches[0].pageY; isPulling = true; }
-    }, { passive: true });
-
+    window.addEventListener('touchstart', (e) => { if (window.scrollY === 0) { startY = e.touches[0].pageY; isPulling = true; } }, { passive: true });
     window.addEventListener('touchmove', (e) => {
         if (!isPulling) return;
-        const currentY = e.touches[0].pageY;
-        const diff = (currentY - startY) * 0.4;
+        const diff = (e.touches[0].pageY - startY) * 0.4;
         if (diff > 0) {
             refreshContainer.style.height = Math.min(diff, 70) + 'px';
             refreshSpinner.style.transform = `rotate(${diff * 5}deg)`;
-            refreshContainer.style.transition = 'none';
         }
     }, { passive: true });
 
     window.addEventListener('touchend', async () => {
-        if (!isPulling) return;
-        isPulling = false;
-        const currentHeight = parseInt(refreshContainer.style.height);
-        if (currentHeight >= 60) {
-            refreshContainer.style.transition = 'height 0.3s ease';
-            refreshContainer.style.height = '60px';
+        if (!isPulling) return; isPulling = false;
+        if (parseInt(refreshContainer.style.height) >= 60) {
             refreshSpinner.classList.add('loading');
             await applySettings();
             await fetchApps();
-            setTimeout(() => {
-                refreshSpinner.classList.remove('loading');
-                refreshContainer.style.height = '0';
-                showToast("আপডেট করা হয়েছে");
-            }, 800);
-        } else {
-            refreshContainer.style.transition = 'height 0.3s ease';
-            refreshContainer.style.height = '0';
-        }
+            setTimeout(() => { refreshSpinner.classList.remove('loading'); refreshContainer.style.height = '0'; showToast("আপডেট করা হয়েছে"); }, 800);
+        } else { refreshContainer.style.height = '0'; }
     });
 
-    // --- Apply Store Settings (Name & Color) ---
     async function applySettings() {
         try {
             const res = await fetch(`${SUPABASE_URL}/rest/v1/store_settings?id=eq.1`, {
                 headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
             });
-            const settings = await res.json();
-            if (settings.length > 0) {
-                const s = settings[0];
+            const s = (await res.json())[0];
+            if (s) {
                 document.getElementById('storeTitle').innerText = s.store_name;
-                document.title = s.store_name;
+                document.getElementById('storeTitle').style.color = s.title_text_color;
                 document.documentElement.style.setProperty('--primary', s.primary_color);
+                document.documentElement.style.setProperty('--search-bg', s.search_bar_bg_color);
+                document.documentElement.style.setProperty('--card-bg', s.app_card_bg_color);
+                document.documentElement.style.setProperty('--text-main', s.app_name_color);
+                document.documentElement.style.setProperty('--dialog-bg', s.dialog_bg_color);
+                document.documentElement.style.setProperty('--dialog-text', s.dialog_text_color);
+                
+                // --- নতুন কালার ইমপ্লিমেন্টেশন ---
+                if (s.main_bg_color) {
+                    document.documentElement.style.setProperty('--bg', s.main_bg_color);
+                }
+                if (s.header_bg_color) {
+                    document.documentElement.style.setProperty('--header-bg', s.header_bg_color);
+                }
+                
+                if(s.is_dark_mode) document.body.classList.add('dark-theme');
+                else document.body.classList.remove('dark-theme');
             }
-        } catch (e) { console.log("Settings Load Error"); }
+        } catch (e) { console.log("Settings Error"); }
     }
 
     async function fetchApps() {
@@ -479,36 +487,28 @@
                 headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
             });
             apps = await res.json();
-            renderApps(apps);
-            renderCategories();
+            renderApps(apps); renderCategories();
             document.getElementById('loader').style.display = 'none';
-        } catch (e) {
-            showToast("সার্ভার সমস্যা!");
-            document.getElementById('loader').style.display = 'none';
-        }
+        } catch (e) { showToast("সার্ভার সমস্যা!"); document.getElementById('loader').style.display = 'none'; }
     }
 
     function renderCategories() {
         const cats = ['all', ...new Set(apps.map(a => a.category))];
-        const container = document.getElementById('catSlider');
-        container.innerHTML = cats.map(c => `
+        document.getElementById('catSlider').innerHTML = cats.map(c => `
             <div class="cat-chip ${c==='all'?'active':''}" onclick="filterCat('${c}', this)">${c==='all'?'সব':c}</div>
         `).join('');
     }
 
     function renderIconHtml(icon) {
-        if(icon && icon.startsWith('http')) {
-            return `<img src="${icon}" class="app-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/5231/5231019.png'">`;
-        }
+        if(icon && icon.startsWith('http')) return `<img src="${icon}" class="app-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/5231/5231019.png'">`;
         return `<div class="app-emoji-icon">${icon || '📦'}</div>`;
     }
 
     function renderApps(data) {
-        const grid = document.getElementById('appsGrid');
-        grid.innerHTML = data.map(app => `
+        document.getElementById('appsGrid').innerHTML = data.map(app => `
             <div class="app-card" onclick="openDetailModalById(${app.id})">
                 ${renderIconHtml(app.icon)}
-                <div class="app-name">${escapeHtml(app.name)}</div>
+                <div class="app-name">${app.name}</div>
                 <div class="app-meta">${app.category} • ⭐${app.rating}</div>
                 <button class="btn-install" id="btn-${app.id}" onclick="event.stopPropagation(); handleAction(${app.id})">ইন্সটল</button>
                 <button class="btn-cancel" id="cncl-${app.id}" onclick="event.stopPropagation(); cancelDownload(${app.id})">ক্যানসেল</button>
@@ -517,49 +517,26 @@
         `).join('');
     }
 
-    function escapeHtml(str) { return String(str).replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
-
-    function openDetailModalById(id) {
-        const app = apps.find(a => a.id === id);
-        if (app) openDetailModal(app);
-    }
+    function openDetailModalById(id) { const app = apps.find(a => a.id === id); if (app) openDetailModal(app); }
 
     function openDetailModal(app) {
         currentDetailApp = app;
         document.getElementById('detailIconArea').innerHTML = renderIconHtml(app.icon);
         document.getElementById('detailAppName').innerText = app.name;
         document.getElementById('detailMeta').innerText = `${app.category} • ⭐${app.rating}`;
-        document.getElementById('detailDesc').innerText = app.description || "এই অ্যাপ সম্পর্কে কোনো বিবরণ নেই।";
-        
-        // Render Screenshots
+        document.getElementById('detailDesc').innerText = app.description || "বিবরণ নেই।";
         const screenshotArea = document.getElementById('screenshotArea');
         screenshotArea.innerHTML = '';
-        const shots = [app.shot1, app.shot2, app.shot3, app.shot4].filter(s => s && s.startsWith('http'));
-        if(shots.length > 0) {
-            shots.forEach(s => {
-                screenshotArea.innerHTML += `<img src="${s}" class="screenshot-img" onclick="window.open('${s}')">`;
-            });
-            screenshotArea.style.display = 'flex';
-        } else {
-            screenshotArea.style.display = 'none';
-        }
-
+        [app.shot1, app.shot2, app.shot3, app.shot4].forEach(s => { if(s && s.startsWith('http')) screenshotArea.innerHTML += `<img src="${s}" class="screenshot-img">`; });
         resetModalToInitial();
-        
         document.getElementById('detailInstallBtn').onclick = () => startDownload(app, true);
         document.getElementById('detailModal').style.display = 'flex';
     }
 
-    function handleAction(id) {
-        const app = apps.find(a => a.id === id);
-        if(!activeDownloads[id]) startDownload(app, false);
-    }
+    function handleAction(id) { const app = apps.find(a => a.id === id); if(!activeDownloads[id]) startDownload(app, false); }
 
     function startDownload(app, fromModal) {
-        const id = app.id;
-        if(activeDownloads[id]) return;
-        activeDownloads[id] = true;
-        
+        const id = app.id; if(activeDownloads[id]) return; activeDownloads[id] = true;
         if(fromModal) {
             modalTriggeredDownloadId = id;
             document.getElementById('detailInitialButtons').style.display = 'none';
@@ -572,20 +549,13 @@
             document.getElementById(`cncl-${id}`).style.display = 'inline-block';
             document.getElementById(`pbox-${id}`).style.display = 'block';
         }
-        
-        if (typeof Android !== 'undefined' && Android.downloadFile) {
-            Android.downloadFile(app.download_url, app.name + ".apk", id);
-        } else {
-            window.open(app.download_url);
-            activeDownloads[id] = false;
-            fromModal ? resetModalToInitial() : resetUI(id);
-        }
+        if (typeof Android !== 'undefined') Android.downloadFile(app.download_url, app.name + ".apk", id);
+        else { window.open(app.download_url); activeDownloads[id] = false; fromModal ? resetModalToInitial() : resetUI(id); }
     }
 
     function cancelDownload(id) {
-        if (typeof Android !== 'undefined' && Android.cancelDownload) Android.cancelDownload(id);
-        activeDownloads[id] = false;
-        resetUI(id);
+        if (typeof Android !== 'undefined') Android.cancelDownload(id);
+        activeDownloads[id] = false; resetUI(id);
         if(currentDetailApp && currentDetailApp.id === id) resetModalToInitial();
         showToast("বাতিল করা হয়েছে");
     }
@@ -593,54 +563,30 @@
     window.updateProgress = function(appId, percent, status, filePath) {
         const isModal = (modalTriggeredDownloadId === appId);
         if(status === 'downloading') {
-            if(isModal) {
-                document.getElementById('detailProgressFill').style.width = percent + "%";
-                document.getElementById('detailPercentText').innerText = percent + "%";
-            } else {
-                const btn = document.getElementById(`btn-${appId}`);
-                if(btn) btn.innerText = percent + "%";
-                const pbar = document.getElementById(`pbar-${appId}`);
-                if(pbar) pbar.style.width = percent + "%";
-            }
+            if(isModal) { document.getElementById('detailProgressFill').style.width = percent + "%"; document.getElementById('detailPercentText').innerText = percent + "%"; }
+            else { document.getElementById(`btn-${appId}`).innerText = percent + "%"; document.getElementById(`pbar-${appId}`).style.width = percent + "%"; }
         } else if(status === 'complete') {
-            activeDownloads[appId] = false;
-            resetUI(appId);
+            activeDownloads[appId] = false; resetUI(appId);
             if(isModal) { closeDetailModal(); modalTriggeredDownloadId = null; }
             showInstallModal(appId, filePath);
-        } else if(status === 'error') {
-            activeDownloads[appId] = false;
-            resetUI(appId);
-            if(isModal) resetModalToInitial();
-            showToast("ডাউনলোড ব্যর্থ!");
-        }
+        } else if(status === 'error') { activeDownloads[appId] = false; resetUI(appId); if(isModal) resetModalToInitial(); showToast("ব্যর্থ!"); }
     };
 
     function showInstallModal(id, path) {
-        const app = apps.find(a => a.id == id);
-        if(!app) return;
+        const app = apps.find(a => a.id == id); if(!app) return;
         document.getElementById('modalAppName').innerText = app.name;
         document.getElementById('modalIconBox').innerHTML = renderIconHtml(app.icon);
         document.getElementById('installModal').style.display = 'flex';
-        document.getElementById('finalInstallBtn').onclick = function() {
-            if (typeof Android !== 'undefined' && Android.installApk) Android.installApk(path);
-            closeModal();
-        };
+        document.getElementById('finalInstallBtn').onclick = () => { if (typeof Android !== 'undefined') Android.installApk(path); closeModal(); };
     }
 
     function resetUI(id) {
-        const btn = document.getElementById(`btn-${id}`);
-        if(btn) { btn.innerText = "ইন্সটল"; btn.classList.remove('downloading'); }
+        const btn = document.getElementById(`btn-${id}`); if(btn) { btn.innerText = "ইন্সটল"; btn.classList.remove('downloading'); }
         if(document.getElementById(`cncl-${id}`)) document.getElementById(`cncl-${id}`).style.display = 'none';
         if(document.getElementById(`pbox-${id}`)) document.getElementById(`pbox-${id}`).style.display = 'none';
     }
 
-    function resetModalToInitial() {
-        document.getElementById('detailInitialButtons').style.display = 'flex';
-        document.getElementById('detailProgressArea').style.display = 'none';
-        document.getElementById('detailProgressFill').style.width = "0%";
-        document.getElementById('detailPercentText').innerText = "0%";
-    }
-
+    function resetModalToInitial() { document.getElementById('detailInitialButtons').style.display = 'flex'; document.getElementById('detailProgressArea').style.display = 'none'; }
     function closeDetailModal() { document.getElementById('detailModal').style.display = 'none'; currentDetailApp = null; }
     function closeModal() { document.getElementById('installModal').style.display = 'none'; }
     function filterCat(cat, el) {
@@ -648,19 +594,10 @@
         if(el) el.classList.add('active');
         renderApps(cat === 'all' ? apps : apps.filter(a => a.category === cat));
     }
-    document.getElementById('searchInput').oninput = e => {
-        const val = e.target.value.toLowerCase();
-        renderApps(apps.filter(a => a.name.toLowerCase().includes(val)));
-    };
-    function showToast(msg) {
-        const t = document.getElementById('toast');
-        t.innerText = msg; t.style.display = 'block';
-        setTimeout(() => t.style.display = 'none', 3000);
-    }
+    document.getElementById('searchInput').oninput = e => { renderApps(apps.filter(a => a.name.toLowerCase().includes(e.target.value.toLowerCase()))); };
+    function showToast(msg) { const t = document.getElementById('toast'); t.innerText = msg; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 3000); }
     
-    // Start Up
-    applySettings();
-    fetchApps();
+    applySettings(); fetchApps();
 </script>
 </body>
 </html>
